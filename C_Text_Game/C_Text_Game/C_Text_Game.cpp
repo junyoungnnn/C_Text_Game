@@ -14,11 +14,12 @@
 #define DOWN 80
 
 #define Player_x_limit 60
-#define Player_y_limit 6
+#define Player_y_limit 7
 
 #define MONSTER1_Y_LIMIT 20
 #define MONSTER2_Y_LIMIT 16
 
+#pragma region 구조체
 
 struct Player {
 	int x;
@@ -53,16 +54,37 @@ struct Interface {
 	int level;
 };
 
-int seed1 = 0;
-int seed2 = 0;
+#pragma endregion
 
-int Random(int seed)
+
+int Random()
 {
-	srand(time(NULL));
-	seed = rand() % 3 - 1; // -1, 0, +1 반환
+	int seed = rand() % 3 - 1; // -1, 0, +1 반환
 
 	return seed;
 }
+
+// 맵생성
+char map[WIDTH][HEIGHT];
+
+void CreateMap(struct Interface player_interface)
+{
+	printf("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n");
+	printf("■\t\t\t\t\t\t\t\t\t\t\t\t\t\t■\n");
+	printf("■\t\t\t\t\t\t\t\t\t\t\t\t\t\t■\n");
+	printf("■\t\ttime : %.1f\t\thp : %d\t\t\tscore : %d\t\tlevel : %d\t\t■\n", player_interface.time, player_interface.hp, player_interface.score, player_interface.level);
+	printf("■\t\t\t\t\t\t\t\t\t\t\t\t\t\t■\n");
+	printf("■\t\t\t\t\t\t\t\t\t\t\t\t\t\t■\n");
+	printf("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n");
+	for (int i = 8;i < HEIGHT - 1; i++)
+	{
+		printf("\n");
+	}
+	printf("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n");
+}
+
+
+#pragma region 이동
 
 // 좌표 이동 함수
 void gotoXY(int x, int y)
@@ -73,11 +95,6 @@ void gotoXY(int x, int y)
 	// 커서 이동
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), position);
 }
-
-// 맵생성
-char map[WIDTH][HEIGHT];
-
-
 
 void KeyBoard(Player* player)
 {
@@ -93,7 +110,7 @@ void KeyBoard(Player* player)
 		switch (key)
 		{
 		case UP:
-			if (player->y >= Player_y_limit)
+			if (player->y > Player_y_limit)
 			{
 				player->y--;
 			}
@@ -111,7 +128,7 @@ void KeyBoard(Player* player)
 			}
 			break;
 		case DOWN:
-			if (player->y <=HEIGHT)
+			if (player->y <HEIGHT - 3)
 			{
 				player->y++;
 			}
@@ -119,6 +136,7 @@ void KeyBoard(Player* player)
 		}
 	}
 }
+#pragma endregion
 
 // 투사체에 맞으면 체력 감소 함수
 /*
@@ -131,26 +149,40 @@ void damage()
 
 int main()
 {
-	Player player = { 6,18,"★"};
+	srand(time(NULL));
+
+	struct Player player = { 6,18,"★"};
 	struct Player_attack player_attack[5] = { {player.x, player.y, "◎"},{player.x, player.y, "◎"},{player.x, player.y, "◎"},{player.x, player.y, "◎"},{player.x, player.y, "◎"} };
 	struct Interface player_interface = { 0,5,0,1 };
 	struct Monster monster[2] = { {76,12,"♣"}, { 76,24,"♣"} };
-	struct Monster_attack monster_attack[2] = { {monster[0].x, monster[0].y,"☎"}, { monster[1].x, monster[1].y,"☎" } };
+	struct Monster_attack monster1_attack[6] = { {monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"}};
+	struct Monster_attack monster2_attack[6] = { {monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"}};
 
 	while (1)
 	{
-		printf("\n\n");
-		printf("\t\ttime: %.1f\thp : %d\t\tscore : %d\tlevel : %d", player_interface.time, player_interface.hp, player_interface.score, player_interface.level);
+		CreateMap(player_interface);
+
+		//printf("\t\ttime: %.1f\thp : %d\t\tscore : %d\tlevel : %d", player_interface.time, player_interface.hp, player_interface.score, player_interface.level);
 		player_interface.time += 0.1;
+
+#pragma region monster의 움직임
 
 		if (monster[0].y >= Player_y_limit || monster[0].y <= MONSTER1_Y_LIMIT)
 		{
-			monster[0].y += Random(seed1);
+			monster[0].y += Random();
+
+			gotoXY(monster[0].x, monster[0].y);
+			printf("%s", monster[0].shape);
 		}
-		if (monster[1].y >= MONSTER2_Y_LIMIT || monster[1].y <= HEIGHT)
+
+		if (monster[1].y >= MONSTER2_Y_LIMIT && monster[1].y < HEIGHT-3)
 		{
-			monster[1].y += Random(seed2);
+			monster[1].y += Random();
+
+			gotoXY(monster[1].x, monster[1].y);
+			printf("%s", monster[1].shape);
 		}
+
 		// 벽에 부딪히면 다시 움직이게함
 		if (monster[0].y == Player_y_limit)
 		{
@@ -164,10 +196,13 @@ int main()
 		{
 			monster[1].y++;
 		}
-		if (monster[1].y == HEIGHT)
+		if (monster[1].y == HEIGHT-3)
 		{
 			monster[1].y--;
 		}
+
+#pragma endregion
+
 
 		// 플레이어 투사체가 끝에 도달하면 삭제
 		for (int i = 0; i < 5; i++)
@@ -179,19 +214,24 @@ int main()
 			}
 		}
 		// 적 투사체가 끝에 도달하면 삭제
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 6; i++)
 		{
-			if (monster_attack[i].x < 0)
+			if (monster1_attack[i].x < 0)
 			{
-				monster_attack[i].x = monster[i].x;
-				monster_attack[i].y = monster[i].y;
+				monster1_attack[i].x = monster[0].x;
+				monster1_attack[i].y = monster[0].y;
+			}
+			if (monster2_attack[i].x < 0)
+			{
+				monster2_attack[i].x = monster[1].x;
+				monster2_attack[i].y = monster[1].y;
 			}
 		}
 
 		// 투사체에 맞으면 체력감소 of die
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 6; i++)
 		{
-			if (player.x == monster_attack[i].x && player.y == monster_attack[i].y)
+			if (player.x == monster1_attack[i].x && player.y == monster1_attack[i].y || player.x == monster2_attack[i].x && player.y == monster2_attack[i].y)
 			{
 				player_interface.hp--;
 				if (player_interface.hp < 0)
@@ -199,6 +239,24 @@ int main()
 					return 0;
 				}
 			}
+		}
+
+		int attack_delay1 = 0;
+		int attack_delay2 = 0;
+		if (attack_delay1 <= 0)
+		{
+			attack_delay1 = Random() % 4 + 2;
+			
+		}
+		if (attack_delay2 <= 0)
+		{
+			attack_delay2 = Random() % 4 + 2;
+		}
+		// 여기서부터 시작int attack_time1 = 0;
+		// attack_time1 += 0.1;
+		//if (attack_delay1 < attack_time1)
+		{
+
 		}
 
 		KeyBoard(&player);
@@ -215,15 +273,12 @@ int main()
 		gotoXY(player_attack[4].x++, player_attack[4].y);
 		printf("%s", player_attack[4].attack);
 
-		gotoXY(monster[0].x, monster[0].y);
-		printf("%s", monster[0].shape);
-		gotoXY(monster_attack[0].x--, monster_attack[0].y);
-		printf("%s", monster_attack[0].attack);
 
-		gotoXY(monster[1].x, monster[1].y);
-		printf("%s", monster[1].shape);
-		gotoXY(monster_attack[1].x--, monster_attack[1].y);
-		printf("%s", monster_attack[1].attack);
+		gotoXY(monster1_attack[0].x--, monster1_attack[0].y);
+		printf("%s", monster1_attack[0].attack);
+
+		gotoXY(monster2_attack[1].x--, monster2_attack[1].y);
+		 printf("%s", monster2_attack[1].attack);
 		
 		Sleep(100);
 		system("cls");

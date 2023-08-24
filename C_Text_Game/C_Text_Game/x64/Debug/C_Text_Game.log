@@ -1,6 +1,6 @@
 ﻿  C_Text_Game.cpp
-C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\C_Text_Game.cpp(61,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\C_Text_Game.cpp(71,21): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\C_Text_Game.cpp(71,23): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\C_Text_Game.cpp(144,31): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
-  C_Text_Game.vcxproj -> C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\x64\Debug\C_Text_Game.exe
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\C_Text_Game.cpp(93,21): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\C_Text_Game.cpp(93,23): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\C_Text_Game.cpp(152,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\C_Text_Game.cpp(166,31): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+  C_Text_Game.vcxproj -> C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\x64\Debug\C_Text_Game.exe
