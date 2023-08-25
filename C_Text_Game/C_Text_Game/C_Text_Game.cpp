@@ -19,6 +19,9 @@
 #define MONSTER1_Y_LIMIT 20
 #define MONSTER2_Y_LIMIT 16
 
+#define BULLET_SIZE 6
+
+
 #pragma region 구조체
 
 struct Player {
@@ -40,11 +43,13 @@ struct Player_attack
 	const char* attack;
 };
 
-struct Monster_attack
+struct Bullet
 {
 	int x;
 	int y;
 	const char* attack;
+	int attack_time = 0;
+	int attack_delay = 0;
 };
 
 struct Interface {
@@ -146,6 +151,34 @@ void damage()
 }
 */
 
+//bool flag = false;
+//void shot(Monster_attack monster_attack[])
+//{
+//	if (monster_attack[]->attack_delay <= 0)
+//	{
+//		monster_attack[bullet]->attack_delay = Random() % 4 + 2;
+//		flag = true;
+//	}
+//	monster_attack[bullet]->attack_time += 0.1;
+//
+//	if (monster_attack[bullet]->attack_time >= monster_attack[bullet]->attack_delay)
+//	{
+//		flag = false;
+//	}
+//}
+
+static int index = 0;
+
+void Launch(Bullet* enemy)
+{
+	index++;
+
+	if (index % BULLET_SIZE == 0)
+	{
+		index = 0;
+	}
+}
+
 
 int main()
 {
@@ -155,8 +188,9 @@ int main()
 	struct Player_attack player_attack[5] = { {player.x, player.y, "◎"},{player.x, player.y, "◎"},{player.x, player.y, "◎"},{player.x, player.y, "◎"},{player.x, player.y, "◎"} };
 	struct Interface player_interface = { 0,5,0,1 };
 	struct Monster monster[2] = { {76,12,"♣"}, { 76,24,"♣"} };
-	struct Monster_attack monster1_attack[6] = { {monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"},{monster[0].x, monster[0].y,"☎"}};
-	struct Monster_attack monster2_attack[6] = { {monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"},{monster[1].x, monster[1].y,"☎"}};
+	struct Bullet monster1_attack[6] = { {monster[0].x, monster[0].y,"☎", 0,0},{monster[0].x, monster[0].y,"☎", 0,0},{monster[0].x, monster[0].y,"☎", 0,0},{monster[0].x, monster[0].y,"☎", 0,0},{monster[0].x, monster[0].y,"☎", 0,0},{monster[0].x, monster[0].y,"☎", 0,0} };
+	struct Bullet monster2_attack[6] = { {monster[1].x, monster[1].y,"☎", 0,0},{monster[1].x, monster[1].y,"☎", 0,0},{monster[1].x, monster[1].y,"☎", 0,0},{monster[1].x, monster[1].y,"☎", 0,0},{monster[1].x, monster[1].y,"☎", 0,0},{monster[1].x, monster[1].y,"☎", 0,0}};
+
 
 	while (1)
 	{
@@ -241,8 +275,7 @@ int main()
 			}
 		}
 
-		int attack_delay1 = 0;
-		int attack_delay2 = 0;
+		
 		if (attack_delay1 <= 0)
 		{
 			attack_delay1 = Random() % 4 + 2;
@@ -252,11 +285,18 @@ int main()
 		{
 			attack_delay2 = Random() % 4 + 2;
 		}
-		// 여기서부터 시작int attack_time1 = 0;
-		// attack_time1 += 0.1;
-		//if (attack_delay1 < attack_time1)
+		attack_time1 += 0.1;
+		if (attack_delay1 <= attack_time1)
 		{
-
+			// 총알 발사
+			attack_delay1 = 0;
+			attack_time1 = 0;
+		}
+		if (attack_delay2 <= attack_time2)
+		{
+			// 총알 발사
+			attack_delay2 = 0;
+			attack_time2 = 0;
 		}
 
 		KeyBoard(&player);
@@ -264,21 +304,19 @@ int main()
 		printf("%s", player.shape);
 		gotoXY(player_attack[0].x++, player_attack[0].y);
 		printf("%s", player_attack[0].attack);
-		gotoXY(player_attack[1].x++, player_attack[1].y);
-		printf("%s", player_attack[1].attack);
-		gotoXY(player_attack[2].x++, player_attack[2].y);
-		printf("%s", player_attack[2].attack);
-		gotoXY(player_attack[3].x++, player_attack[3].y);
-		printf("%s", player_attack[3].attack);
-		gotoXY(player_attack[4].x++, player_attack[4].y);
-		printf("%s", player_attack[4].attack);
+
+		for (int i = 0; i <= index; i++)
+		{
+			gotoXY(enemy[i].x--, enemy[i].y);
+			printf("%s\n", enemy[i].shape);
+		}
 
 
 		gotoXY(monster1_attack[0].x--, monster1_attack[0].y);
 		printf("%s", monster1_attack[0].attack);
 
 		gotoXY(monster2_attack[1].x--, monster2_attack[1].y);
-		 printf("%s", monster2_attack[1].attack);
+		printf("%s", monster2_attack[1].attack);
 		
 		Sleep(100);
 		system("cls");
