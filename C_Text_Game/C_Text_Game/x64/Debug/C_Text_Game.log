@@ -1,5 +1,15 @@
-﻿  test2.cpp
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\test2.cpp(17,19): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\test2.cpp(17,21): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\test2.cpp(37,15): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  C_Text_Game.vcxproj -> C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\x64\Debug\C_Text_Game.exe
+﻿  new.cpp
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(25,6): error C2182: 'KeyBoard': 이 'void' 사용은 유효하지 않습니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(25,15): error C2065: 'Player': 선언되지 않은 식별자입니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(25,23): error C2065: 'player': 선언되지 않은 식별자입니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(89,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(100,3): error C2064: 항은 1개의 인수를 받아들이는 함수로 계산되지 않습니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(134,21): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(134,23): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(140,6): error C2365: 'KeyBoard': 재정의: 이전 정의는 '데이터 변수'입니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(25,6): message : 'KeyBoard' 선언을 참조하십시오.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(178,10): error C2275: 'Bullet': 형식 대신 식이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(178,17): error C2146: 구문 오류: ')'이(가) 'bullet' 식별자 앞에 없습니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(178,17): error C2146: 구문 오류: ';'이(가) 'bullet' 식별자 앞에 없습니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(178,23): error C2059: 구문 오류: ')'
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(178,17): error C2065: 'bullet': 선언되지 않은 식별자입니다.
