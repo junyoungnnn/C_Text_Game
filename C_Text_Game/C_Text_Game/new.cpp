@@ -21,16 +21,18 @@
 #define MONSTER2_Y_LIMIT 16
 
 #define BULLET_SIZE 10
-void gotoXY(int x, int y);
-void KeyBoard(Player* player);
+void gotoXY(int, int);
+//void KeyBoard(Player);
 
-struct Interface {
+struct Interface 
+{
 	float time;
 	int hp;
 	int score;
 };
 
-struct Player {
+struct Player 
+{
 	int x;
 	int y;
 	const char* shape;
@@ -71,58 +73,6 @@ int Random()
 {
 	seed = rand() % 21 + 8;
 	return seed;
-}
-
-void Shoot(Bullet * bullet)
-{
-	for (int i = bullet->x; i < WIDTH; i++)
-	{
-		gotoXY(i++, bullet->y);
-		printf("%s", bullet->shape);
-	}
-}
-
-
-
-int main()
-{
-	srand(time(NULL));
-
-	struct Player player = { 6,18,"¡ê" };
-	struct Interface player_interface = { 0,5,0};
-	struct Enemy enemy = { 100, seed, "¡Ú" };
-	struct Bullet bullet[10] = { {player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."} };
-
-	while (1)
-	{
-		CreateMap(player_interface);
-
-		KeyBoard(&player);
-		gotoXY(player.x, player.y);
-		printf("%s", player.shape);
-
-		if (enemy.x < 0 || enemy.y < 8)
-		{
-			enemy.x = WIDTH;
-			enemy.y = Random();
-		}
-		if (player.x == enemy.x && player.y == enemy.y)
-		{
-			player_interface.hp--;
-			if (player_interface.hp < 0)
-			{
-				return 0;
-			}
-		}
-
-		gotoXY(enemy.x--, enemy.y);
-		printf("%s", enemy.shape);
-
-		Sleep(100);
-		system("cls");
-	}
-
-	return 0;
 }
 
 #pragma region ÀÌµ¿
@@ -175,9 +125,72 @@ void KeyBoard(Player* player)
 			}
 			break;
 		case SPACE:
-			Shoot(Bullet bullet);
+			//Shoot(Bullet bullet);
 			break;
 		}
 	}
 }
 #pragma endregion
+
+void Shoot(Bullet * bullet)
+{
+	for (int i = bullet->x; i < WIDTH; i++)
+	{
+		gotoXY(i++, bullet->y);
+		printf("%s", bullet->shape);
+	}
+}
+
+void Create_enemy(struct Enemy enemy)
+{
+	if (enemy.x < 0 || enemy.y < 8)
+	{
+		enemy.x = WIDTH;
+		enemy.y = Random();
+	}
+	
+	gotoXY(enemy.x--, enemy.y);
+	printf("%s", enemy.shape);
+}
+void Collider(struct Interface player_interface, struct Player player, struct Enemy enemy)
+{
+	if (player.x == enemy.x && player.y == enemy.y)
+	{
+		player_interface.hp--;
+		if (player_interface.hp < 0)
+		{
+			return;
+		}
+	}
+}
+
+
+
+int main()
+{
+	srand(time(NULL));
+
+	struct Player player = { 6,18,"¡ê" };
+	struct Interface player_interface = { 0,5,0};
+	struct Enemy enemy[5] = { {100, seed, "¡Ú"},{100, seed, "¡Ú"},{100, seed, "¡Ú"},{100, seed, "¡Ú"},{100, seed, "¡Ú"} };
+	struct Bullet bullet[10] = { {player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."} };
+
+	while (1)
+	{
+		CreateMap(player_interface);
+
+		KeyBoard(&player);
+		gotoXY(player.x, player.y);
+		printf("%s", player.shape);
+
+		Create_enemy(enemy[0]);
+		Collider(player_interface, player, enemy[0]);
+		
+
+		Sleep(100);
+		system("cls");
+	}
+
+	return 0;
+}
+
