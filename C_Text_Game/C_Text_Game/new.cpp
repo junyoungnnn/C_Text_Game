@@ -82,22 +82,29 @@ void Shoot(Player* player, Bullet * bullet)
 	{
 		gotoXY(i++, player->y);
 		printf("%s", bullet->shape);
-		gotoXY(i--, player->y);
-		printf(" ");
+		Sleep(25);
+		gotoXY(i - 1, player->y);
+		printf("  ");
+		gotoXY(i + 2,player->y);
+		
+
 	}
 }
 
-void Create_enemy(struct Enemy* enemy)
+void Create_enemy(struct Enemy* enemy, bool* flag)
 {
-	//Sleep(100);
-	if (enemy->x < 0 || enemy->y < 8)
+	if (*flag == true)
 	{
-		enemy->x = WIDTH;
-		enemy->y = Random();
-	}
-	
+		
 	gotoXY(enemy->x--, enemy->y);
 	printf("%s", enemy->shape);
+		if (enemy->x < 0 || enemy->y < 8)
+		{
+			*flag = false;
+			enemy->x = WIDTH;
+			enemy->y = Random();
+		}
+	}
 }
 void Collision(struct Interface* player_interface, struct Player* player, struct Enemy* enemy)
 {
@@ -115,19 +122,34 @@ void Collision(struct Interface* player_interface, struct Player* player, struct
 	}
 }
 
+void Start_flag(int *delay, bool*flag)
+{
+	if (*delay % 10 == 0)
+	{
+		*flag = true;
+		*delay = 0;
+	}
+}
+
 
 
 int main()
 {
 	srand(time(NULL));
+	int delay = 0;
+	bool flag[5] = { false, false, false, false, false };
+	
 
 	Player player = { 6,18,"¡ê" };
 	Interface player_interface = { 0,5,0 };
-	Enemy enemy[5] = { {100, seed, "¡Ú"},{100, seed, "¡Ú"},{100, seed, "¡Ú"},{100, seed, "¡Ú"},{100, seed, "¡Ú"} };
-	Bullet bullet[10] = { {player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."},{player.x, player.y, "."} };
+	Enemy enemy[5] = { {100, Random(), "¡Ú"},{100, Random(), "¡Ú"},{100, Random(), "¡Ú"},{100, Random(), "¡Ú"},{100, Random(), "¡Ú"}};
+	Bullet bullet[10] = { {player.x, player.y, "¡æ"},{player.x, player.y, "¡æ"},{player.x, player.y, "¡æ"},{player.x, player.y, "¡æ"},{player.x, player.y, "¡æ"},{player.x, player.y, "¡æ"},{player.x, player.y, "¡æ"},{player.x, player.y, "¡æ"},{player.x, player.y, "¡æ"},{player.x, player.y, "¡æ"} };
 
 	while (1)
 	{
+		delay += 1;
+		printf("%d", delay);
+		
 		CreateMap(&player_interface);
 		//player_interface.time += 0.1;
 
@@ -135,11 +157,15 @@ int main()
 		gotoXY(player.x, player.y);
 		printf("%s", player.shape);
 
-		Create_enemy(&enemy[0]);
-		Create_enemy(&enemy[1]);
-		Create_enemy(&enemy[2]);
-		Create_enemy(&enemy[3]);
-		Create_enemy(&enemy[4]);
+		Start_flag(&delay, &flag[0]);
+		Create_enemy(&enemy[0], &flag[0]);
+
+		Start_flag(&delay, &flag[1]);
+		Create_enemy(&enemy[1], &flag[1]);
+
+		Create_enemy(&enemy[2], &flag[2]);
+		Create_enemy(&enemy[3], &flag[3]);
+		Create_enemy(&enemy[4], &flag[4]);
 		Collision(&player_interface, &player, enemy);
 		
 		
