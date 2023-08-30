@@ -1,5 +1,8 @@
 ﻿  new.cpp
-C:\Users\IDBLAB\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(138,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\IDBLAB\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(185,21): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\IDBLAB\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(185,23): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-  C_Text_Game.vcxproj -> C:\Users\IDBLAB\Desktop\C_Text_Game\C_Text_Game\x64\Debug\C_Text_Game.exe
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(117,31): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(118,27): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(119,27): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(168,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(220,21): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new.cpp(220,23): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  C_Text_Game.vcxproj -> C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\x64\Debug\C_Text_Game.exe

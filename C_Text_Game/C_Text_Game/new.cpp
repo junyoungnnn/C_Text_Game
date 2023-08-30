@@ -22,6 +22,8 @@
 
 #define BULLET_SIZE 10
 
+bool bullet_check[10] = { false, false, false, false, false, false, false, false, false, false };
+
 struct Interface 
 {
 	float time;
@@ -76,18 +78,46 @@ int Random()
 	return seed;
 }
 
-void Shoot(Player* player, Bullet * bullet)
-{
-	for (int i = player->x; i < WIDTH; i++)
-	{
-		gotoXY(i++, player->y);
-		printf("%s", bullet->shape);
-		Sleep(25);
-		gotoXY(i - 1, player->y);
-		printf("  ");
-		gotoXY(i + 2,player->y);
-		
+int bullet_index = 0;
 
+void Shoot(Player* player, Bullet * bullet, bool* bullet_check)
+{
+	printf("**bullet_index: %d**: %d", bullet_index, bullet_check[bullet_index]);
+	//for (int i = player->x; i < i+1; i++)
+	//{
+	//	//Sleep(25);
+	//	//gotoXY(i - 1, player->y);
+	//	//printf("  ");
+	//	//gotoXY(i + 2,player->y);
+	//
+	//}
+	if (bullet_index == 9)
+	{
+		bullet_index = 0;
+	}
+	bullet_index++;
+	bullet_check[bullet_index] = true;
+	
+	
+}
+
+void Bullet_Move(Player* player, Bullet* bullet, bool* bullet_check)
+{
+	//bullet[bullet_index].x = player->x;
+	if (bullet_check[bullet_index] == true)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+		gotoXY(bullet[bullet_index].x++, player->y);
+		
+			printf("%s", bullet[bullet_index].shape);
+		}
+		if (bullet[bullet_index].x == WIDTH)
+		{
+			bullet_check[bullet_index] == false;
+			bullet[bullet_index].x == -1;
+			bullet[bullet_index].y == 40;
+		}
 	}
 }
 
@@ -139,6 +169,7 @@ int main()
 	int delay = 0;
 	bool flag[5] = { false, false, false, false, false };
 	
+	
 
 	Player player = { 6,18,"¡ê" };
 	Interface player_interface = { 0,5,0 };
@@ -156,6 +187,10 @@ int main()
 		KeyBoard(&player, bullet);
 		gotoXY(player.x, player.y);
 		printf("%s", player.shape);
+
+		Bullet_Move(&player, bullet, bullet_check);
+
+
 
 		Start_flag(&delay, &flag[0]);
 		Create_enemy(&enemy[0], &flag[0]);
@@ -226,7 +261,7 @@ void KeyBoard(Player* player, Bullet* bullet)
 			}
 			break;
 		case SPACE:
-			Shoot(player, bullet);
+			Shoot(player, bullet, bullet_check);
 			break;
 		}
 	}
