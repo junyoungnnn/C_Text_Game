@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="new2.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="doublebuffer.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

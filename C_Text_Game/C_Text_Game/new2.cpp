@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
+#include "doublebuffer.h"
 
 #define WIDTH 116
 #define HEIGHT 30
@@ -81,14 +82,14 @@ int Random()
 }
 
 // 총알 발사 true
-int bullet_index = 0;
+int bullet_Y;
 void Shoot(Player* player, Bullet* bullet, bool* bullet_check)
 {
 	//bullet[bullet_index].x = player->x;
-	printf("**bullet_index: %d**: %d", bullet_index, *bullet_check);
+	printf("***: %d", *bullet_check);
 	
 	*bullet_check = true;
-	//int bullet_Y = player->y;
+	bullet_Y = player->y;
 
 }
 
@@ -98,20 +99,26 @@ void Bullet_Move(Player* player, Bullet* bullet, bool* bullet_check)
 
 	if (*bullet_check == true)
 	{
+			gotoXY(bullet->x++, bullet_Y);
 
-		
-			gotoXY(bullet->x++, player->y);
-
-			printf("     %s      ", bullet->shape);
+			//printf("%s", bullet->shape);
 
 		}
 		if (bullet->x == WIDTH)
 		{
 			*bullet_check = false;
-			bullet->x = -1;
-			bullet->y = 40;
+			
 		}
-	
+}
+
+// 총알 위치를 플레이어에게 맞추는 함수
+void Bullet_Position(Player* player, Bullet* bullet, bool* bullet_check)
+{
+	if (*bullet_check == false)
+	{
+		bullet->x = player->x;
+		bullet->y = player->y;
+	}
 }
 
 // 적 생성 플래그, 벽에 충돌화면 위치 초기화
@@ -121,25 +128,12 @@ void Create_enemy(struct Enemy* enemy, bool* flag)
 	{
 
 		gotoXY(enemy->x--, enemy->y);
-		printf("%s", enemy->shape);
+		//printf("%s", enemy->shape);
 		if (enemy->x < 0 || enemy->y < 8)
 		{
 			*flag = false;
-			
 		}
-		
 	}
-	
-}
-
-void Enemy_Reset(struct Enemy* enemy, bool* flag)
-{
-	if (*flag == false)
-	{
-		enemy->x = WIDTH;
-		enemy->y = Random();
-	}
-
 }
 
 // 적과 부딪치면 데미지
@@ -159,6 +153,16 @@ void Collision(struct Interface* player_interface, struct Player* player, struct
 	}
 }
 
+void Enemy_Reset(struct Enemy* enemy, bool* flag)
+{
+	if (*flag == false)
+	{
+		enemy->x = WIDTH;
+		enemy->y = Random();
+	}
+
+}
+
 // 총알에 맞은 적 파괴
 void Distory(Bullet* bullet, Enemy* enemy, bool* flag)
 {
@@ -166,14 +170,13 @@ void Distory(Bullet* bullet, Enemy* enemy, bool* flag)
 	if (bullet->x == enemy->x && bullet->y == enemy->y)
 	{
 		*flag = false;
-		//Create_enemy(&enemy[i], &flag[i]);
-		exit(0);
+		//exit(0);
 		
 	}
 
 }
 
-// 삭제예정
+// 적 생성 시작 플래그
 void Start_flag(int* delay, bool* flag)
 {
 	*flag = true;
@@ -183,13 +186,14 @@ void Start_flag(int* delay, bool* flag)
 
 int main()
 {
+	Init();
 	srand(time(NULL));
 	int delay = 0;
 	bool flag[5] = { false, false, false, false, false };
 
 	Player player = { 6,18,"↔" };
 	Interface player_interface = { 0,5,0 };
-	Enemy enemy[5] = { {100, Random(), "★"},{100, Random(), "★"},{100, Random(), "★"},{100, Random(), "★"},{100, Random(), "★"} };
+	Enemy enemy[5] = { {WIDTH, Random(), "★"},{WIDTH, Random(), "★"},{WIDTH, Random(), "★"},{WIDTH, Random(), "★"},{WIDTH, Random(), "★"} };
 	//Bullet bullet[10] = { {player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"} };
 	Bullet bullet = { player.x, player.y, "→" };
 	while (1)
@@ -205,6 +209,7 @@ int main()
 		printf("%s", player.shape);
 
 		Bullet_Move(&player, &bullet, &bullet_check);
+		Bullet_Position(&player, &bullet, &bullet_check);
 
 
 
@@ -214,24 +219,57 @@ int main()
 		Distory(&bullet, &enemy[0], &flag[0]);
 		Enemy_Reset(&enemy[0], &flag[0]);
 
-		Start_flag(&delay, &flag[1]);
+		if (enemy[0].x == 80) 
+		{
+			Start_flag(&delay, &flag[1]);
+		}
 		Create_enemy(&enemy[1], &flag[1]);
 		Distory(&bullet, &enemy[1], &flag[1]);
 		Enemy_Reset(&enemy[1], &flag[1]);
 
+		if (enemy[1].x == 80)
+		{
+			Start_flag(&delay, &flag[2]);
+		}
 		Create_enemy(&enemy[2], &flag[2]);
+		Distory(&bullet, &enemy[2], &flag[2]);
+		Enemy_Reset(&enemy[2], &flag[2]);
+
+		if (enemy[2].x == 80)
+		{
+			Start_flag(&delay, &flag[3]);
+		}
 		Create_enemy(&enemy[3], &flag[3]);
+		Distory(&bullet, &enemy[3], &flag[3]);
+		Enemy_Reset(&enemy[3], &flag[3]);
+
+		if (enemy[3].x == 80)
+		{
+			Start_flag(&delay, &flag[4]);
+		}
 		Create_enemy(&enemy[4], &flag[4]);
+		Distory(&bullet, &enemy[4], &flag[4]);
+		Enemy_Reset(&enemy[4], &flag[4]);
+
 		Collision(&player_interface, &player, enemy);
-
-		
-		
-
 
 		Sleep(10);
 		system("cls");
-	}
+		ShowBuffer(player.x, player.y, player.shape);
+		ShowBuffer(enemy[0].x, enemy[0].y, enemy[0].shape);
+		ShowBuffer(enemy[1].x, enemy[1].y, enemy[1].shape);
+		ShowBuffer(enemy[2].x, enemy[2].y, enemy[2].shape);
+		ShowBuffer(enemy[3].x, enemy[3].y, enemy[3].shape);
+		ShowBuffer(enemy[4].x, enemy[4].y, enemy[4].shape);
+		ShowBuffer(bullet.x, bullet.y, bullet.shape);
 
+		// 2. 버퍼교체
+		Flipping();
+
+		Clear();
+	}
+	// 4. 버퍼를 해제합니다.
+	ReleaseScreen();
 	return 0;
 }
 
