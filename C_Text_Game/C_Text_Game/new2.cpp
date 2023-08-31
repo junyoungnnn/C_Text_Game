@@ -28,8 +28,9 @@ bool bullet_check = false;
 
 struct Interface
 {
+	int x, y;
 	float time;
-	int hp;
+	const char* hp;
 	int score;
 };
 
@@ -116,10 +117,10 @@ void Bullet_Position(Player* player, Bullet* bullet, bool* bullet_check)
 {
 	if (*bullet_check == false)
 	{
-		bullet->x = player->x;
+		bullet->x = player->x - 1;
 		bullet->y = player->y;
 	}
-}
+}	
 
 // 적 생성 플래그, 벽에 충돌화면 위치 초기화
 void Create_enemy(struct Enemy* enemy, bool* flag)
@@ -143,15 +144,19 @@ void Collision(struct Interface* player_interface, struct Player* player, struct
 	{
 		if (player->x == enemy[i].x && player->y == enemy[i].y)
 		{
-			player_interface->hp--;
-			if (player_interface->hp <= 0)
+			if (player_interface->hp == "♥♥♥♥♥") player_interface->hp = "♥♥♥♥";
+			else if (player_interface->hp == "♥♥♥♥") player_interface->hp = "♥♥♥";
+			else if (player_interface->hp == "♥♥♥") player_interface->hp = "♥♥";
+			else if (player_interface->hp == "♥♥") player_interface->hp = "♥";
+			else if (player_interface->hp == "♥")
 			{
-				player_interface->hp--;
+				player_interface->hp = " ";
 				exit(0);
 			}
 		}
 	}
 }
+
 
 void Enemy_Reset(struct Enemy* enemy, bool* flag)
 {
@@ -164,16 +169,15 @@ void Enemy_Reset(struct Enemy* enemy, bool* flag)
 }
 
 // 총알에 맞은 적 파괴
-void Distory(Bullet* bullet, Enemy* enemy, bool* flag)
+void Distory(Bullet* bullet, Enemy* enemy, bool* flag, Interface* player_interface)
 {
 
 	if (bullet->x == enemy->x && bullet->y == enemy->y)
 	{
+		player_interface->score += 100;
 		*flag = false;
 		//exit(0);
-		
 	}
-
 }
 
 // 적 생성 시작 플래그
@@ -192,10 +196,10 @@ int main()
 	bool flag[5] = { false, false, false, false, false };
 
 	Player player = { 6,18,"↔" };
-	Interface player_interface = { 0,5,0 };
-	Enemy enemy[5] = { {WIDTH, Random(), "★"},{WIDTH, Random(), "★"},{WIDTH, Random(), "★"},{WIDTH, Random(), "★"},{WIDTH, Random(), "★"} };
+	Interface player_interface = { 0, 0, 0, "♥♥♥♥♥", 0};
+	Enemy enemy[5] = { {WIDTH, Random(), "★0"},{WIDTH, Random(), "★1"},{WIDTH, Random(), "★2"},{WIDTH, Random(), "★3"},{WIDTH, Random(), "★4"} };
 	//Bullet bullet[10] = { {player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"} };
-	Bullet bullet = { player.x, player.y, "→" };
+	Bullet bullet = { player.x, player.y, "*→" };
 	while (1)
 	{
 		delay += 1;
@@ -216,7 +220,7 @@ int main()
 
 		Start_flag(&delay, &flag[0]);
 		Create_enemy(&enemy[0], &flag[0]);
-		Distory(&bullet, &enemy[0], &flag[0]);
+		Distory(&bullet, &enemy[0], &flag[0],&player_interface);
 		Enemy_Reset(&enemy[0], &flag[0]);
 
 		if (enemy[0].x == 80) 
@@ -224,7 +228,7 @@ int main()
 			Start_flag(&delay, &flag[1]);
 		}
 		Create_enemy(&enemy[1], &flag[1]);
-		Distory(&bullet, &enemy[1], &flag[1]);
+		Distory(&bullet, &enemy[1], &flag[1], &player_interface);
 		Enemy_Reset(&enemy[1], &flag[1]);
 
 		if (enemy[1].x == 80)
@@ -232,7 +236,7 @@ int main()
 			Start_flag(&delay, &flag[2]);
 		}
 		Create_enemy(&enemy[2], &flag[2]);
-		Distory(&bullet, &enemy[2], &flag[2]);
+		Distory(&bullet, &enemy[2], &flag[2], &player_interface);
 		Enemy_Reset(&enemy[2], &flag[2]);
 
 		if (enemy[2].x == 80)
@@ -240,7 +244,7 @@ int main()
 			Start_flag(&delay, &flag[3]);
 		}
 		Create_enemy(&enemy[3], &flag[3]);
-		Distory(&bullet, &enemy[3], &flag[3]);
+		Distory(&bullet, &enemy[3], &flag[3], &player_interface);
 		Enemy_Reset(&enemy[3], &flag[3]);
 
 		if (enemy[3].x == 80)
@@ -248,7 +252,7 @@ int main()
 			Start_flag(&delay, &flag[4]);
 		}
 		Create_enemy(&enemy[4], &flag[4]);
-		Distory(&bullet, &enemy[4], &flag[4]);
+		Distory(&bullet, &enemy[4], &flag[4], &player_interface);
 		Enemy_Reset(&enemy[4], &flag[4]);
 
 		Collision(&player_interface, &player, enemy);
@@ -262,6 +266,7 @@ int main()
 		ShowBuffer(enemy[3].x, enemy[3].y, enemy[3].shape);
 		ShowBuffer(enemy[4].x, enemy[4].y, enemy[4].shape);
 		ShowBuffer(bullet.x, bullet.y, bullet.shape);
+		ShowBuffer(player_interface.x, player_interface.y, player_interface.hp);
 
 		// 2. 버퍼교체
 		Flipping();
