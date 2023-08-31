@@ -54,6 +54,7 @@ struct Bullet
 void gotoXY(int, int);
 void KeyBoard(Player*, Bullet*);
 
+// 맵 생성
 void CreateMap(struct Interface* player_interface)
 {
 	printf("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n");
@@ -70,18 +71,19 @@ void CreateMap(struct Interface* player_interface)
 	printf("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n");
 }
 
+// 적 y축 렌덤 셍성
 int seed;
-
 int Random()
 {
 	seed = rand() % 20 + 8;
 	return seed;
 }
 
+// 총알 발사 true
 int bullet_index = 0;
-
 void Shoot(Player* player, Bullet * bullet, bool* bullet_check)
 {
+	//bullet[bullet_index].x = player->x;
 	printf("**bullet_index: %d**: %d", bullet_index, bullet_check[bullet_index]);
 	//for (int i = player->x; i < i+1; i++)
 	//{
@@ -97,30 +99,34 @@ void Shoot(Player* player, Bullet * bullet, bool* bullet_check)
 	}
 	bullet_index++;
 	bullet_check[bullet_index] = true;
-	
+	//int bullet_Y = player->y;
 	
 }
 
+// 총알 이동 함수
 void Bullet_Move(Player* player, Bullet* bullet, bool* bullet_check)
 {
-	//bullet[bullet_index].x = player->x;
+	
 	if (bullet_check[bullet_index] == true)
 	{
-		for (int i = 0; i < 6; i++)
+		
+		for (int i = 0; i < 9; i++)
 		{
 		gotoXY(bullet[bullet_index].x++, player->y);
 		
-			printf("%s", bullet[bullet_index].shape);
+			printf("     %s      ", bullet[bullet_index].shape);
+			
 		}
-		if (bullet[bullet_index].x == WIDTH)
+		/*if (bullet[bullet_index].x == WIDTH)
 		{
 			bullet_check[bullet_index] == false;
 			bullet[bullet_index].x == -1;
 			bullet[bullet_index].y == 40;
-		}
+		}*/
 	}
 }
 
+// 적 생성 플래그, 벽에 충돌화면 위치 초기화
 void Create_enemy(struct Enemy* enemy, bool* flag)
 {
 	if (*flag == true)
@@ -136,6 +142,8 @@ void Create_enemy(struct Enemy* enemy, bool* flag)
 		}
 	}
 }
+
+// 적과 부딪치면 데미지
 void Collision(struct Interface* player_interface, struct Player* player, struct Enemy* enemy)
 {
 	for (int i = 0; i < 5; i++)
@@ -152,6 +160,18 @@ void Collision(struct Interface* player_interface, struct Player* player, struct
 	}
 }
 
+void Distory(Bullet* bullet, Enemy* enemy)
+{
+	for (int i = 0; i < 5; i++)
+	{
+		if (bullet->x == enemy[i].x && bullet->y == enemy[i].y)
+		{
+			enemy[i].x = -1;
+		}
+	}
+}
+
+// 삭제예정
 void Start_flag(int *delay, bool*flag)
 {
 	if (*delay % 10 == 0)
@@ -174,8 +194,8 @@ int main()
 	Player player = { 6,18,"↔" };
 	Interface player_interface = { 0,5,0 };
 	Enemy enemy[5] = { {100, Random(), "★"},{100, Random(), "★"},{100, Random(), "★"},{100, Random(), "★"},{100, Random(), "★"}};
-	Bullet bullet[10] = { {player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"} };
-
+	//Bullet bullet[10] = { {player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"},{player.x, player.y, "→"} };
+	Bullet bullet = {player.x, player.y, "→"};
 	while (1)
 	{
 		delay += 1;
@@ -184,11 +204,12 @@ int main()
 		CreateMap(&player_interface);
 		//player_interface.time += 0.1;
 
-		KeyBoard(&player, bullet);
+		KeyBoard(&player, &bullet);
 		gotoXY(player.x, player.y);
 		printf("%s", player.shape);
 
-		Bullet_Move(&player, bullet, bullet_check);
+		Bullet_Move(&player, &bullet, bullet_check);
+		
 
 
 
@@ -202,6 +223,7 @@ int main()
 		Create_enemy(&enemy[3], &flag[3]);
 		Create_enemy(&enemy[4], &flag[4]);
 		Collision(&player_interface, &player, enemy);
+		Distory(&bullet, enemy);
 		
 		
 		Sleep(10);
