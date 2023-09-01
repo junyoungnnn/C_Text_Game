@@ -1,14 +1,12 @@
 ﻿  new2.cpp
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(29,18): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(29,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(32,33): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(32,45): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(110,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(110,30): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(120,10): warning C4267: '인수': 'size_t'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new2.cpp(72,9): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'const char *'입니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new2.cpp(72,9): warning C4313: 'printf': 서식 문자열의 '%d'이(가) const char *' 형식의 인수 2과(와) 충돌합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new2.cpp(222,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new2.cpp(321,21): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new2.cpp(321,23): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-  C_Text_Game.vcxproj -> C:\Users\Administrator\Desktop\C_Text_Game\C_Text_Game\x64\Debug\C_Text_Game.exe
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(29,18): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(29,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(32,33): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(32,45): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(110,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(110,30): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\doublebuffer.h(120,10): warning C4267: '인수': 'size_t'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new2.cpp(234,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new2.cpp(333,21): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\C_Text_Game\new2.cpp(333,23): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  C_Text_Game.vcxproj -> C:\Users\노준영\Desktop\C_Text_Game\C_Text_Game\x64\Debug\C_Text_Game.exe
