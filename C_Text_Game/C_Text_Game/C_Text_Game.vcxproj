@@ -127,10 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="new2.cpp" />
+    <ClCompile Include="shootgane.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="doublebuffer.h" />
+    <ClInclude Include="tItle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
