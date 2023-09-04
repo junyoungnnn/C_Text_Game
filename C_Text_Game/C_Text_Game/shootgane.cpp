@@ -146,7 +146,6 @@ void Enemy_Reset(struct Enemy* enemy, bool* enemy_flag)
 		enemy->x = WIDTH;
 		enemy->y = Random();
 	}
-
 }
 
 // 적과 부딪치면 데미지
@@ -156,13 +155,13 @@ void Collision(struct Interface* player_interface, struct Player* player, struct
 	{
 		if (player->x == enemy[i].x && player->y == enemy[i].y)
 		{
-			if (player_interface->hp == "♥♥♥♥♥") player_interface->hp = "♥♥♥♥";
-			else if (player_interface->hp == "♥♥♥♥") player_interface->hp = "♥♥♥";
-			else if (player_interface->hp == "♥♥♥") player_interface->hp = "♥♥";
-			else if (player_interface->hp == "♥♥") player_interface->hp = "♥";
-			else if (player_interface->hp == "♥")
+			if (player_interface->hp == "♥♥♥♥♥") player_interface->hp = "♥♥♥♥♡";
+			else if (player_interface->hp == "♥♥♥♥♡") player_interface->hp = "♥♥♥♡♡";
+			else if (player_interface->hp == "♥♥♥♡♡") player_interface->hp = "♥♥♡♡♡";
+			else if (player_interface->hp == "♥♥♡♡♡") player_interface->hp = "♥♡♡♡♡";
+			else if (player_interface->hp == "♥♡♡♡♡")
 			{
-				player_interface->hp = " ";
+				//player_interface->hp = "";
 				exit(0);
 			}
 		}
@@ -217,10 +216,10 @@ void Recovery(Player* player, Item* item, Interface * player_interface, bool* it
 	{
 		*item_flag = false;
 		player_interface->score += 100;
-		if (player_interface->hp == "♥♥♥♥") player_interface->hp = "♥♥♥♥♥";
-		else if (player_interface->hp == "♥♥♥") player_interface->hp = "♥♥♥♥";
-		else if (player_interface->hp == "♥♥") player_interface->hp = "♥♥♥";
-		else if (player_interface->hp == "♥") player_interface->hp = "♥♥";
+		if (player_interface->hp == "♥♥♥♥♡") player_interface->hp = "♥♥♥♥♥";
+		else if (player_interface->hp == "♥♥♥♡♡") player_interface->hp = "♥♥♥♥♡";
+		else if (player_interface->hp == "♥♥♡♡♡") player_interface->hp = "♥♥♥♡♡";
+		else if (player_interface->hp == "♥♡♡♡♡") player_interface->hp = "♥♥♡♡♡";
 	}
 }
 
@@ -346,7 +345,7 @@ int main()
 	// 버퍼를 해제
 	ReleaseScreen();
 	
-	End_Title();
+	//End_Title();
 
 }
 
